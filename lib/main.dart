@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_jobs/src/app.dart';
+import 'package:jobber/src/app.dart';
 
 void main() => runApp(JobberApp());

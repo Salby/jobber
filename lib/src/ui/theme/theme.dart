@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_jobs/src/ui/theme/colors.dart';
+import 'package:jobber/src/ui/theme/colors.dart';
 
 ThemeData buildTheme() {
   final base = ThemeData.dark();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_jobs/src/core/models/positions.dart';
+import 'package:jobber/src/core/models/positions.dart';
 
 import 'package:provider/provider.dart';
 
