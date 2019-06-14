@@ -6,7 +6,7 @@ class Positions with ChangeNotifier {
   final _provider = JobsProvider();
 
   bool isLoading = false;
-  List<dynamic> _positions = [];
+  List<dynamic> _positions;
 
   List<dynamic> get positions => _positions;
 
