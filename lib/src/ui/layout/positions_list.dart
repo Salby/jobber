@@ -11,9 +11,6 @@ class PositionsList extends StatelessWidget {
     final positions = Provider.of<Positions>(context);
     return LoadingTransition(
       child: Builder(builder: (context) {
-        if (positions.positions.isEmpty) {
-          positions.getPositions();
-        }
         if (positions.isLoading) {
           return Container(
             height: MediaQuery.of(context).size.height / 2,
@@ -29,11 +26,10 @@ class PositionsList extends StatelessWidget {
               final position = positions.positions[index];
               return ListTile(
                 title: Text(position['title']),
-                subtitle: Text(position['type']),
+                subtitle: Text(position['location']),
               );
             },
-            separatorBuilder: (context, index) =>
-                Divider(height: 1.0),
+            separatorBuilder: (context, index) => Divider(height: 1.0),
             itemCount: positions.positions.length,
           );
         }

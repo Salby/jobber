@@ -13,14 +13,15 @@ class HomeAppBar extends StatelessWidget {
       title: Text(
         'Jobber',
         style: Theme.of(context).textTheme.title.copyWith(
-          color: Theme.of(context).accentColor,
-        ),
+              color: Theme.of(context).accentColor,
+            ),
       ),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.refresh),
           tooltip: 'Refresh',
-          onPressed: () => Provider.of<Positions>(context).getPositions(),
+          onPressed: () =>
+              Provider.of<Positions>(context).getPositions(context),
         ),
       ],
     );

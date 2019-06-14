@@ -10,10 +10,10 @@ class Positions with ChangeNotifier {
 
   List<dynamic> get positions => _positions;
 
-  Future<void> getPositions() async {
+  Future<void> getPositions(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    final positions = await _provider.positions();
+    final positions = await _provider.positionsFromLocation(context);
     _positions = positions;
     isLoading = false;
     notifyListeners();
