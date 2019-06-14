@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_jobs/src/ui/theme/theme.dart';
-import 'package:flutter_jobs/src/ui/screens/home.dart';
+import 'package:jobber/src/ui/theme/theme.dart';
+import 'package:jobber/src/ui/screens/home.dart';
 
 class JobberApp extends StatelessWidget {
   @override
