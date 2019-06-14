@@ -10,13 +10,17 @@ class JobberApp extends StatelessWidget {
     final theme = buildTheme();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: theme.colorScheme.background.withOpacity(0.8),
-      systemNavigationBarColor: theme.colorScheme.background,
     ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Jobber',
       theme: theme,
-      home: Home(),
+      home: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: theme.colorScheme.background,
+        ),
+        child: Home(),
+      ),
     );
   }
 }
