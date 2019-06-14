@@ -12,6 +12,7 @@ ThemeData buildTheme() {
     accentColor: colorScheme.secondary,
 
     scaffoldBackgroundColor: colorScheme.background,
+    cardColor: colorScheme.surface,
 
     textTheme: _buildTextTheme(base.textTheme),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),

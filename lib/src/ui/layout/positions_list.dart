@@ -53,6 +53,7 @@ class PositionsList extends StatelessWidget {
                       id: position['id'],
                     ),
                     parentKey: parentKey,
+                    scrimColor: Theme.of(context).cardColor,
                   )),
                 );
               },
