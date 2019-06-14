@@ -25,7 +25,13 @@ class JobsProvider {
     return _handleResponse(response);
   }
 
-  List<dynamic> _handleResponse(Response response, { String error }) {
+  Future<Map<String, dynamic>> positionFromId(String id) async {
+    final response =
+        await _client.get('$_baseUrl/positions/$id.json?markdown=true');
+    return _handleResponse(response, error: 'Failed to get position');
+  }
+
+  dynamic _handleResponse(Response response, {String error}) {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

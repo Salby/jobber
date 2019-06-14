@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
+import 'package:jobber/src/ui/screens/position_details.dart';
 
 import 'package:provider/provider.dart';
+import 'package:morpheus/morpheus.dart';
 
 class PositionsList extends StatelessWidget {
   @override
@@ -40,9 +42,19 @@ class PositionsList extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final position = model.positions[index];
+                final parentKey = GlobalKey();
                 return ListTile(
+                  key: parentKey,
                   title: Text(position['title']),
                   subtitle: Text(position['location']),
+                  onTap: () => Navigator.of(context).push(MorpheusPageRoute(
+                    builder: (_) => PositionDetails(
+                      title: position['title'],
+                      id: position['id'],
+                    ),
+                    parentKey: parentKey,
+                    scrimColor: Theme.of(context).cardColor,
+                  )),
                 );
               },
               separatorBuilder: (context, index) => Divider(height: 1.0),
