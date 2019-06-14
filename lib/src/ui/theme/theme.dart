@@ -22,6 +22,10 @@ ThemeData buildTheme() {
 
 _buildTextTheme(TextTheme base) {
   return base.copyWith(
+    headline: base.headline.copyWith(
+      fontFamily: 'Noto Sans HK',
+      fontWeight: FontWeight.w700,
+    ),
     title: base.title.copyWith(
       fontFamily: 'Noto Sans HK',
       fontWeight: FontWeight.w900,

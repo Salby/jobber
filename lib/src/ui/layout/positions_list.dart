@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
-import 'package:jobber/src/ui/screens/position.dart';
+import 'package:jobber/src/ui/screens/position_details.dart';
 
 import 'package:provider/provider.dart';
 import 'package:morpheus/morpheus.dart';
@@ -48,7 +48,7 @@ class PositionsList extends StatelessWidget {
                   title: Text(position['title']),
                   subtitle: Text(position['location']),
                   onTap: () => Navigator.of(context).push(MorpheusPageRoute(
-                    builder: (_) => Position(
+                    builder: (_) => PositionDetails(
                       title: position['title'],
                       id: position['id'],
                     ),
