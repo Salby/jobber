@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 
 class LoadingTransition extends ImplicitlyAnimatedWidget {
   LoadingTransition({
-    @required this.child,
+    @required this.contentChild,
+    @required this.loadingChild,
+    @required this.loading,
     this.duration = const Duration(milliseconds: 300),
   }) : super(
     curve: Curves.easeInOut,
     duration: duration,
   );
 
-  final Widget child;
+  final Widget contentChild;
+  final Widget loadingChild;
+  final bool loading;
   final Duration duration;
+
+  Widget get child => loading ? loadingChild : contentChild;
 
   @override
   _LoadingTransitionState createState() => _LoadingTransitionState();

@@ -24,20 +24,31 @@ class PositionDetails extends StatelessWidget {
           centerTitle: true,
           title: Text('Position'),
         ),
-        body: LoadingTransition(
-          duration: Duration(milliseconds: 500),
-          child: Consumer<Position>(
-            builder: (context, model, child) {
-              if (model.description == null) {
-                model.getPosition();
-              }
-              if (model.isLoading) {
-                return _loading();
-              } else {
-                return _body(context, model);
-              }
-            },
-          ),
+        body: Consumer<Position>(
+          builder: (context, model, child) {
+            if (model.title == '') model.getPosition();
+            return LoadingTransition(
+              contentChild: _body(context, model),
+              loadingChild: _loading(),
+              loading: model.isLoading,
+            );
+          },
+        ),
+        floatingActionButton: Consumer<Position>(
+          builder: (context, model, child) {
+            if (model.saved == null) {
+              return Container();
+            } else {
+              return FloatingActionButton(
+                child: LoadingTransition(
+                  contentChild: Icon(Icons.bookmark),
+                  loadingChild: Icon(Icons.bookmark_border),
+                  loading: !model.saved,
+                ),
+                onPressed: () => model.toggleSaved(),
+              );
+            }
+          },
         ),
       ),
     );

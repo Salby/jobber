@@ -13,16 +13,16 @@ class Position with ChangeNotifier {
 
   bool isLoading = false;
   SharedPreferences _prefsInstance;
-  String type;
-  String url;
-  String createdAt;
-  String company;
-  String companyUrl;
-  String location;
-  String title;
-  String description;
-  String howToApply;
-  String companyLogo;
+  String type = '';
+  String url = '';
+  String createdAt = '';
+  String company = '';
+  String companyUrl = '';
+  String location = '';
+  String title = '';
+  String description = '';
+  String howToApply = '';
+  String companyLogo = '';
   bool saved;
 
   final _provider = JobsProvider();
