@@ -11,7 +11,7 @@ class PositionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Positions>(context);
-    if (model.positions.isEmpty)
+    if (model.positions == null)
       model.getPositions(context);
     return LoadingTransition(
       contentChild: _content(context, model),
@@ -21,7 +21,7 @@ class PositionsList extends StatelessWidget {
   }
 
   Widget _content(BuildContext context, Positions model) {
-    if (model.positions.isEmpty) {
+    if (model.positions == null || model.positions.isEmpty) {
       return Container(
         height: MediaQuery
             .of(context)
