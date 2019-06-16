@@ -8,9 +8,9 @@ class LoadingTransition extends ImplicitlyAnimatedWidget {
     @required this.loading,
     this.duration = const Duration(milliseconds: 300),
   }) : super(
-    curve: Curves.easeInOut,
-    duration: duration,
-  );
+          curve: Curves.easeInOut,
+          duration: duration,
+        );
 
   final Widget contentChild;
   final Widget loadingChild;
@@ -27,6 +27,7 @@ class _LoadingTransitionState
     extends AnimatedWidgetBaseState<LoadingTransition> {
   LoadingTransitionOpacityTween opacityTween;
   LoadingTransitionChildTween childTween;
+  Widget currentContent;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +39,16 @@ class _LoadingTransitionState
 
   @override
   void forEachTween(visitor) {
-    opacityTween = visitor(opacityTween, 1.0,
-            (opacity) => LoadingTransitionOpacityTween(begin: opacity));
+    opacityTween = visitor(opacityTween, 1.0, (opacity) {
+      if (widget.child == currentContent) {
+        return Tween<double>(begin: 1.0);
+      } else {
+        currentContent = widget.child;
+        return LoadingTransitionOpacityTween(begin: opacity);
+      }
+    });
     childTween = visitor(childTween, widget.child,
-            (child) => LoadingTransitionChildTween(begin: child));
+        (child) => LoadingTransitionChildTween(begin: child));
   }
 }
 
