@@ -36,12 +36,22 @@ class Position with ChangeNotifier {
     title = positionData['title'];
     description = positionData['description'];
     howToApply = positionData['how_to_apply'];
-    companyLogo = positionData['companyLogo'];
+    companyLogo = positionData['company_logo'];
     isLoading = false;
     notifyListeners();
   }
 
-
-
-
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'type': type,
+    'url': url,
+    'created_at': createdAt,
+    'company': company,
+    'company_url': companyUrl,
+    'location': location,
+    'title': title,
+    'description': description,
+    'how_to_apply': howToApply,
+    'companyLogo': companyLogo,
+  };
 }

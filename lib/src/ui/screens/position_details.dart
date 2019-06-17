@@ -48,7 +48,7 @@ class PositionDetails extends StatelessWidget {
                     loadingChild: Icon(Icons.bookmark_border),
                     loading: !model.saved,
                   ),
-                  onPressed: () => model.toggleSaved(),
+                  onPressed: () => model.toggleSaved(context),
                 );
               }
             },
