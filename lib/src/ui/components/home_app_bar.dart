@@ -9,6 +9,8 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       floating: true,
+      pinned: true,
+      snap: true,
       centerTitle: true,
       title: Text(
         'Jobber',
@@ -24,6 +26,13 @@ class HomeAppBar extends StatelessWidget {
               Provider.of<Positions>(context).getPositions(context),
         ),
       ],
+      bottom: TabBar(
+        indicatorColor: Theme.of(context).accentColor,
+        tabs: <Widget>[
+          Tab(text: 'Near me'),
+          Tab(text: 'Saved'),
+        ],
+      ),
     );
   }
 }
