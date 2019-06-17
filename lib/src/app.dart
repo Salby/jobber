@@ -9,7 +9,7 @@ class JobberApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = buildTheme();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: theme.colorScheme.background.withOpacity(0.8),
+      statusBarColor: Colors.transparent,
     ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,

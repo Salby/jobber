@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/resources/jobs_provider.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 class Position with ChangeNotifier {
   Position(this.id);
 

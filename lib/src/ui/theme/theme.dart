@@ -9,6 +9,7 @@ ThemeData buildTheme() {
     colorScheme: colorScheme,
 
     primaryColor: colorScheme.primary,
+    primaryColorDark: colorScheme.primaryVariant,
     accentColor: colorScheme.secondary,
 
     scaffoldBackgroundColor: colorScheme.background,
