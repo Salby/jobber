@@ -5,14 +5,11 @@ import 'package:jobber/src/core/resources/jobs_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Position with ChangeNotifier {
-  Position(this.id) {
-    _getInstance();
-  }
+  Position(this.id);
 
   final String id;
 
   bool isLoading = false;
-  SharedPreferences _prefsInstance;
   String type = '';
   String url = '';
   String createdAt = '';
@@ -23,7 +20,6 @@ class Position with ChangeNotifier {
   String description = '';
   String howToApply = '';
   String companyLogo = '';
-  bool saved;
 
   final _provider = JobsProvider();
 
@@ -41,32 +37,11 @@ class Position with ChangeNotifier {
     description = positionData['description'];
     howToApply = positionData['how_to_apply'];
     companyLogo = positionData['companyLogo'];
-    saved = await _saved();
     isLoading = false;
     notifyListeners();
   }
 
-  void toggleSaved() async {
-    if (_prefsInstance == null) await _getInstance();
-    final savedPositions = _prefsInstance.getStringList('savedPositions') ?? [];
-    if (savedPositions.contains(id)) {
-      savedPositions.remove(id);
-    } else {
-      savedPositions.add(id);
-      _prefsInstance.setStringList('savedPositions', savedPositions);
-    }
-    saved = !saved;
-    notifyListeners();
-  }
 
-  Future<void> _getInstance() async {
-    final prefs = await SharedPreferences.getInstance();
-    _prefsInstance = prefs;
-  }
 
-  Future<bool> _saved() async {
-    if (_prefsInstance == null) await _getInstance();
-    final savedPositions = _prefsInstance.getStringList('savedPositions') ?? [];
-    return savedPositions.contains(id);
-  }
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/models/position.dart';
+import 'package:jobber/src/core/models/saved.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
 
 import 'package:provider/provider.dart';
@@ -19,36 +20,39 @@ class PositionDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Position>(
       builder: (_) => Position(id),
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Position'),
-        ),
-        body: Consumer<Position>(
-          builder: (context, model, child) {
-            if (model.title == '') model.getPosition();
-            return LoadingTransition(
-              contentChild: _body(context, model),
-              loadingChild: _loading(),
-              loading: model.isLoading,
-            );
-          },
-        ),
-        floatingActionButton: Consumer<Position>(
-          builder: (context, model, child) {
-            if (model.saved == null) {
-              return Container();
-            } else {
-              return FloatingActionButton(
-                child: LoadingTransition(
-                  contentChild: Icon(Icons.bookmark),
-                  loadingChild: Icon(Icons.bookmark_border),
-                  loading: !model.saved,
-                ),
-                onPressed: () => model.toggleSaved(),
+      child: ChangeNotifierProvider<Saved>(
+        builder: (_) => Saved(id),
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text('Position'),
+          ),
+          body: Consumer<Position>(
+            builder: (context, model, child) {
+              if (model.title == '') model.getPosition();
+              return LoadingTransition(
+                contentChild: _body(context, model),
+                loadingChild: _loading(),
+                loading: model.isLoading,
               );
-            }
-          },
+            },
+          ),
+          floatingActionButton: Consumer<Saved>(
+            builder: (context, model, child) {
+              if (model.saved == null) {
+                return Container();
+              } else {
+                return FloatingActionButton(
+                  child: LoadingTransition(
+                    contentChild: Icon(Icons.bookmark),
+                    loadingChild: Icon(Icons.bookmark_border),
+                    loading: !model.saved,
+                  ),
+                  onPressed: () => model.toggleSaved(),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -84,9 +88,29 @@ class PositionDetails extends StatelessWidget {
           Divider(height: kToolbarHeight),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text(
+              'Description',
+              style: Theme.of(context).textTheme.title.copyWith(
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: MarkdownBody(data: position.description),
           ),
           Divider(height: kToolbarHeight),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text(
+              'How to apply',
+              style: Theme.of(context).textTheme.title.copyWith(
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+          SizedBox(height: 16.0),
           Card(
             elevation: 0.0,
             margin: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -99,7 +123,7 @@ class PositionDetails extends StatelessWidget {
               child: MarkdownBody(data: position.howToApply),
             ),
           ),
-          SizedBox(height: 24.0),
+          SizedBox(height: 80.0),
         ],
       ),
     );
