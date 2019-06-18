@@ -28,7 +28,19 @@ class Saved with ChangeNotifier {
     final savedPositions = _prefsInstance.getStringList('savedPositions') ?? [];
     final model = Provider.of<Position>(context).toMap();
     if (await _saved()) {
-      savedPositions.remove(json.encode(model));
+      int matchIndex;
+      for (int index = 0; index < savedPositions.length; index++) {
+        try {
+          final decoded = json.decode(savedPositions[index]);
+          if (decoded['id'] == model['id']) {
+            matchIndex = index;
+            break;
+          }
+        } catch(e) {
+          matchIndex = null;
+        }
+      }
+      savedPositions.removeAt(matchIndex);
     } else {
       savedPositions.add(json.encode(model));
     }
