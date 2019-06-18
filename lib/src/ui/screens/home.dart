@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/services/location_service.dart';
 import 'package:jobber/src/ui/layout/positions_list.dart';
+import 'package:jobber/src/ui/layout/saved_list.dart';
 import 'package:jobber/src/ui/components/home_app_bar.dart';
 
 import 'package:provider/provider.dart';
@@ -19,17 +20,20 @@ class Home extends StatelessWidget {
           builder: (_) => Positions(),
         ),
       ],
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            HomeAppBar(),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                Divider(height: 1.0),
-                PositionsList(),
-              ]),
-            ),
-          ],
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          body: CustomScrollView(
+            slivers: <Widget>[
+              HomeAppBar(),
+              SliverFillRemaining(
+                child: TabBarView(children: <Widget>[
+                  PositionsList(),
+                  SavedList(),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );

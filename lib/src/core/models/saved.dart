@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/models/position.dart';
+
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Saved with ChangeNotifier {
@@ -18,15 +23,28 @@ class Saved with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleSaved() async {
+  void toggleSaved(BuildContext context) async {
     if (_prefsInstance == null) await _getInstance();
     final savedPositions = _prefsInstance.getStringList('savedPositions') ?? [];
-    if (savedPositions.contains(positionId)) {
-      savedPositions.remove(positionId);
+    final model = Provider.of<Position>(context).toMap();
+    if (await _saved()) {
+      int matchIndex;
+      for (int index = 0; index < savedPositions.length; index++) {
+        try {
+          final decoded = json.decode(savedPositions[index]);
+          if (decoded['id'] == model['id']) {
+            matchIndex = index;
+            break;
+          }
+        } catch(e) {
+          matchIndex = null;
+        }
+      }
+      savedPositions.removeAt(matchIndex);
     } else {
-      savedPositions.add(positionId);
-      _prefsInstance.setStringList('savedPositions', savedPositions);
+      savedPositions.add(json.encode(model));
     }
+    _prefsInstance.setStringList('savedPositions', savedPositions);
     saved = !saved;
     notifyListeners();
   }
@@ -34,7 +52,19 @@ class Saved with ChangeNotifier {
   Future<bool> _saved() async {
     if (_prefsInstance == null) await _getInstance();
     final savedPositions = _prefsInstance.getStringList('savedPositions') ?? [];
-    return savedPositions.contains(positionId);
+    bool saved = false;
+    for (String position in savedPositions) {
+      try {
+        final decoded = json.decode(position);
+        if (decoded['id'] == positionId) {
+          saved = true;
+          break;
+        }
+      } catch(e) {
+        saved = false;
+      }
+    }
+    return saved;
   }
 
   Future<void> _getInstance() async {

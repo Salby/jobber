@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/models/position.dart';
 import 'package:jobber/src/core/models/saved.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
@@ -48,7 +49,7 @@ class PositionDetails extends StatelessWidget {
                     loadingChild: Icon(Icons.bookmark_border),
                     loading: !model.saved,
                   ),
-                  onPressed: () => model.toggleSaved(),
+                  onPressed: () => model.toggleSaved(context),
                 );
               }
             },
@@ -91,8 +92,8 @@ class PositionDetails extends StatelessWidget {
             child: Text(
               'Description',
               style: Theme.of(context).textTheme.title.copyWith(
-                fontSize: 16.0,
-              ),
+                    fontSize: 16.0,
+                  ),
             ),
           ),
           SizedBox(height: 16.0),
@@ -106,8 +107,8 @@ class PositionDetails extends StatelessWidget {
             child: Text(
               'How to apply',
               style: Theme.of(context).textTheme.title.copyWith(
-                fontSize: 16.0,
-              ),
+                    fontSize: 16.0,
+                  ),
             ),
           ),
           SizedBox(height: 16.0),

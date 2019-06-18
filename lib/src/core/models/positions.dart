@@ -7,14 +7,16 @@ class Positions with ChangeNotifier {
 
   bool isLoading = false;
   List<dynamic> _positions;
+  List<dynamic> _saved;
 
   List<dynamic> get positions => _positions;
+  List<dynamic> get saved => _saved;
 
   Future<void> getPositions(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    final positions = await _provider.positionsFromLocation(context);
-    _positions = positions;
+    _positions = await _provider.positionsFromLocation(context);
+    _saved = await _provider.savedPositions();
     isLoading = false;
     notifyListeners();
   }
