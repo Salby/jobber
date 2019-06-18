@@ -11,8 +11,7 @@ class SavedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Positions>(context);
-    if (model.saved == null)
-      model.getPositions(context);
+    if (model.saved == null) model.getPositions(context);
     return LoadingTransition(
       contentChild: _content(context, model),
       loadingChild: _loading(context),
@@ -23,18 +22,12 @@ class SavedList extends StatelessWidget {
   Widget _content(BuildContext context, Positions model) {
     if (model.positions == null || model.positions.isEmpty) {
       return Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height / 2,
+        height: MediaQuery.of(context).size.height / 2,
         alignment: Alignment.center,
         child: Flexible(
           child: Text(
             'Sorry, there are no open positions in your area',
-            style: Theme
-                .of(context)
-                .textTheme
-                .display1,
+            style: Theme.of(context).textTheme.display1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -51,10 +44,8 @@ class SavedList extends StatelessWidget {
             key: parentKey,
             title: Text(position['title']),
             subtitle: Text(position['location']),
-            onTap: () =>
-                Navigator.of(context).push(MorpheusPageRoute(
-                  builder: (_) =>
-                      PositionDetails(
+            onTap: () => Navigator.of(context).push(MorpheusPageRoute(
+                  builder: (_) => PositionDetails(
                         title: position['title'],
                         id: position['id'],
                       ),
@@ -68,12 +59,8 @@ class SavedList extends StatelessWidget {
     }
   }
 
-  Widget _loading(BuildContext context) =>
-      Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height / 2,
+  Widget _loading(BuildContext context) => Container(
+        height: MediaQuery.of(context).size.height / 2,
         alignment: Alignment.center,
         child: CircularProgressIndicator(),
       );

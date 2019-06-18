@@ -11,6 +11,7 @@ class HomeAppBar extends StatelessWidget {
       floating: true,
       pinned: true,
       snap: true,
+      forceElevated: true,
       centerTitle: true,
       title: Text(
         'Jobber',
