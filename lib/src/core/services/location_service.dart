@@ -19,6 +19,8 @@ class LocationService {
 
   Stream<UserLocation> get locationStream => _locationController.stream;
 
+  UserLocation _previousLocation;
+
   var location = Location();
 
   LocationService() {
@@ -28,10 +30,15 @@ class LocationService {
         // If granted listen to the onLocationChanged stream and emit over our controller
         location.onLocationChanged().listen((locationData) {
           if (locationData != null) {
-            _locationController.add(UserLocation(
-              latitude: locationData.latitude,
-              longitude: locationData.longitude,
-            ));
+            if (locationData.longitude != _previousLocation?.longitude &&
+                locationData.latitude != _previousLocation?.latitude) {
+              final newLocation = UserLocation(
+                latitude: locationData.latitude,
+                longitude: locationData.longitude,
+              );
+              _locationController.add(newLocation);
+              _previousLocation = newLocation;
+            }
           }
         });
       }

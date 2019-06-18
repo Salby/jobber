@@ -13,9 +13,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider<UserLocation>(
-          builder: (_) => LocationService().locationStream,
-        ),
+        StreamProvider.value(value: LocationService().locationStream),
         ChangeNotifierProvider<Positions>(
           builder: (_) => Positions(),
         ),
