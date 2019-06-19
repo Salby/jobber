@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/models/position.dart';
 import 'package:jobber/src/core/models/saved.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PositionDetails extends StatelessWidget {
   PositionDetails({
@@ -96,7 +96,10 @@ class PositionDetails extends StatelessWidget {
           SizedBox(height: 16.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: MarkdownBody(data: position.description),
+            child: MarkdownBody(
+              data: position.description,
+              onTapLink: (url) => _launchUrl(url, context),
+            ),
           ),
           Divider(height: kToolbarHeight),
           Padding(
@@ -118,7 +121,10 @@ class PositionDetails extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(24.0),
-              child: MarkdownBody(data: position.howToApply),
+              child: MarkdownBody(
+                data: position.howToApply,
+                onTapLink: (url) => _launchUrl(url, context),
+              ),
             ),
           ),
           SizedBox(height: 80.0),
@@ -131,5 +137,15 @@ class PositionDetails extends StatelessWidget {
     return Center(
       child: CircularProgressIndicator(),
     );
+  }
+
+  void _launchUrl(String url, BuildContext context) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to launch url.'),
+      ));
+    }
   }
 }
