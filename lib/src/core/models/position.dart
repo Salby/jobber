@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:jobber/src/core/resources/jobs_provider.dart';
 
 class Position with ChangeNotifier {
-  Position(this.id);
+  Position(this.id) {
+    getPosition();
+  }
 
   final String id;
 

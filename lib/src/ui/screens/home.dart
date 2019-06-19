@@ -11,28 +11,28 @@ import 'package:provider/provider.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        StreamProvider.value(value: LocationService().locationStream),
-        ChangeNotifierProvider<Positions>(
-          builder: (_) => Positions(),
-        ),
-      ],
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              HomeAppBar(),
-              SliverFillRemaining(
-                child: TabBarView(children: <Widget>[
-                  PositionsList(),
-                  SavedList(),
-                ]),
+    return StreamProvider.value(
+      value: LocationService().locationStream,
+      child: Builder(
+        builder: (context) => ChangeNotifierProvider(
+              builder: (_) => Positions(context),
+              child: DefaultTabController(
+                length: 2,
+                child: Scaffold(
+                  body: CustomScrollView(
+                    slivers: <Widget>[
+                      HomeAppBar(),
+                      SliverFillRemaining(
+                        child: TabBarView(children: <Widget>[
+                          PositionsList(),
+                          SavedList(),
+                        ]),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

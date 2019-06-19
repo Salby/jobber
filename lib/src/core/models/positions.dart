@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:jobber/src/core/resources/jobs_provider.dart';
 
 class Positions with ChangeNotifier {
+  Positions(BuildContext context) {
+    getPositions(context);
+  }
+
   final _provider = JobsProvider();
 
   bool isLoading = false;

@@ -29,14 +29,11 @@ class PositionDetails extends StatelessWidget {
             title: Text('Position'),
           ),
           body: Consumer<Position>(
-            builder: (context, model, child) {
-              if (model.title == '') model.getPosition();
-              return LoadingTransition(
-                contentChild: _body(context, model),
-                loadingChild: _loading(),
-                loading: model.isLoading,
-              );
-            },
+            builder: (context, model, child) => LoadingTransition(
+                  contentChild: _body(context, model),
+                  loadingChild: _loading(),
+                  loading: model.isLoading,
+                ),
           ),
           floatingActionButton: Consumer<Saved>(
             builder: (context, model, child) {

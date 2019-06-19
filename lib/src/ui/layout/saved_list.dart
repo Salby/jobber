@@ -10,12 +10,12 @@ import 'package:morpheus/morpheus.dart';
 class SavedList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Positions>(context);
-    if (model.saved == null) model.getPositions(context);
-    return LoadingTransition(
-      contentChild: _content(context, model),
-      loadingChild: _loading(context),
-      loading: model.isLoading,
+    return Consumer<Positions>(
+      builder: (context, model, child) => LoadingTransition(
+            contentChild: _content(context, model),
+            loadingChild: _loading(context),
+            loading: model.isLoading,
+          ),
     );
   }
 
