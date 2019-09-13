@@ -9,10 +9,11 @@ import 'package:morpheus/morpheus.dart';
 /// allows the user to remove the position from the saved list without going
 /// directly to the position screen.
 class SavedPosition extends StatelessWidget {
-  SavedPosition({
+  const SavedPosition({
     Key key,
     @required this.position,
     @required this.animation,
+    @required this.parentKey,
   }) : super(key: key);
 
   /// The [position] that contains the data that will populate the tile as well
@@ -24,7 +25,7 @@ class SavedPosition extends StatelessWidget {
 
   /// A [GlobalKey] used when pushing the [PositionDetails] screen via a
   /// [MorpheusPageRoute].
-  final _parentKey = GlobalKey();
+  final GlobalKey parentKey;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class SavedPosition extends StatelessWidget {
       child: FadeTransition(
         opacity: transitionAnimation,
         child: ListTile(
-          key: _parentKey,
+          key: parentKey,
           title: Text(position.title),
           subtitle: Text(position.location),
           onTap: () => _showPositionDetails(context),
@@ -76,7 +77,7 @@ class SavedPosition extends StatelessWidget {
         // be handled by the tiled.
         showSavedToggle: false,
       ),
-      parentKey: _parentKey,
+      parentKey: parentKey,
       transitionDuration: const Duration(milliseconds: 400),
     ));
   }
