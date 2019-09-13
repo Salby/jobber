@@ -18,7 +18,7 @@ class PositionDetails extends StatelessWidget {
   const PositionDetails({
     Key key,
     this.title,
-    this.id,
+    @required this.id,
     this.showSavedToggle = true,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class PositionDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<Position>(
+    return ListenableProvider<Position>(
       builder: (_) => Position(id),
       child: ChangeNotifierProvider<Saved>(
         builder: (_) => Saved(id),
