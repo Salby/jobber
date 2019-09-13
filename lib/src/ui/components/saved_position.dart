@@ -12,7 +12,7 @@ class SavedPosition extends StatelessWidget {
   const SavedPosition({
     Key key,
     @required this.position,
-    @required this.animation,
+    this.animation,
     @required this.parentKey,
   }) : super(key: key);
 
@@ -29,40 +29,47 @@ class SavedPosition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Build animation used when animating the tile in or out of the list.
-    final Animation<double> transitionAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: animation,
-      curve: Curves.fastOutSlowIn,
-      reverseCurve: Curves.fastOutSlowIn.flipped,
-    ));
+    final Widget tile = ListTile(
+      key: parentKey,
+      title: Text(position.title),
+      subtitle: Text(position.location),
+      onTap: () => _showPositionDetails(context),
 
-    return SizeTransition(
-      sizeFactor: transitionAnimation,
-      child: FadeTransition(
-        opacity: transitionAnimation,
-        child: ListTile(
-          key: parentKey,
-          title: Text(position.title),
-          subtitle: Text(position.location),
-          onTap: () => _showPositionDetails(context),
-
-          // TODO: Add a trailing button that lets the user remove the position from the positions list.
-          trailing: IconTheme(
-            data: Theme.of(context).primaryIconTheme,
-            child: IconButton(
-              icon: Icon(Icons.remove),
-              tooltip: 'Remove from saved',
-              onPressed: () => Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text('This button currently does nothing.'),
-              )),
-            ),
-          ),
+      // TODO: Add a trailing button that lets the user remove the position from the positions list.
+      trailing: IconTheme(
+        data: Theme.of(context).primaryIconTheme,
+        child: IconButton(
+          icon: Icon(Icons.remove),
+          tooltip: 'Remove from saved',
+          onPressed: () => Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text('This button currently does nothing.'),
+          )),
         ),
       ),
     );
+
+    // Return only the tile if no animation has been provided to listen to.
+    if (animation == null) {
+      return tile;
+    } else {
+      // Build animation used when animating the tile in or out of the list.
+      final Animation<double> transitionAnimation = Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(
+        parent: animation,
+        curve: Curves.fastOutSlowIn,
+        reverseCurve: Curves.fastOutSlowIn.flipped,
+      ));
+
+      return SizeTransition(
+        sizeFactor: transitionAnimation,
+        child: FadeTransition(
+          opacity: transitionAnimation,
+          child: tile,
+        ),
+      );
+    }
   }
 
   /// Pushes a [PositionDetails] screen showing a detailed overview of

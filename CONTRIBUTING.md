@@ -33,7 +33,3 @@ When requesting a new feature or a change, make sure to:
 If you're looking for a simpler issue to solve, look for issues with the [good first issue](https://github.com/Salby/jobber/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) label.
 
 If you're looking for issues that may be a bit more challenging, look for issues with the [help wanted](https://github.com/Salby/jobber/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) label.
-
-## Style guide
-
-All files should be formatted with `dartfmt`.

@@ -29,7 +29,7 @@ class PositionDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableProvider<Position>(
-      builder: (_) => Position(id),
+      builder: (_) => Position.fromId(id),
       child: ChangeNotifierProvider<Saved>(
         builder: (_) => Saved(id),
         child: Scaffold(
