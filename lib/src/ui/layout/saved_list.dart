@@ -45,6 +45,7 @@ class SavedList extends StatelessWidget {
               SavedPosition(
                 position: position,
                 animation: animation,
+                parentKey: model.keys['saved'][index],
               ),
               Divider(height: 1.0),
             ],

@@ -40,7 +40,7 @@ class PositionsList extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           final position = model.positions[index];
-          final parentKey = GlobalKey();
+          final parentKey = model.keys['positions'][index];
           return ListTile(
             key: parentKey,
             title: Text(position['title']),
