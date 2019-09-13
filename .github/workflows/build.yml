@@ -18,7 +18,7 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk'
+      - run: flutter build apk
       # This currently isn't working. Someone on github has the same issue: https://github.com/subosito/flutter-action/issues/4
       #- uses: skx/github-action-publish-binaries@master
       #  env:
