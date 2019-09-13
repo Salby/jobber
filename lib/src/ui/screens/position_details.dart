@@ -30,10 +30,8 @@ class PositionDetails extends StatelessWidget {
           ),
           body: Consumer<Position>(
             builder: (context, model, child) => LoadingTransition(
-                  contentChild: _body(context, model),
-                  loadingChild: _loading(),
-                  loading: model.isLoading,
-                ),
+              child: model.isLoading ? _loading() : _body(context, model),
+            ),
           ),
           floatingActionButton: Consumer<Saved>(
             builder: (context, model, child) {
@@ -42,9 +40,9 @@ class PositionDetails extends StatelessWidget {
               } else {
                 return FloatingActionButton(
                   child: LoadingTransition(
-                    contentChild: Icon(Icons.bookmark),
-                    loadingChild: Icon(Icons.bookmark_border),
-                    loading: !model.saved,
+                    child: model.saved
+                        ? Icon(Icons.bookmark, key: Key('Saved'))
+                        : Icon(Icons.bookmark_border, key: Key('Not saved')),
                   ),
                   onPressed: () => model.toggleSaved(context),
                 );
@@ -58,6 +56,7 @@ class PositionDetails extends StatelessWidget {
 
   Widget _body(BuildContext context, Position position) {
     return Center(
+      key: Key('Content'),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -135,6 +134,7 @@ class PositionDetails extends StatelessWidget {
 
   Widget _loading() {
     return Center(
+      key: Key('Loading'),
       child: CircularProgressIndicator(),
     );
   }

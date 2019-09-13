@@ -12,16 +12,15 @@ class PositionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Positions>(
       builder: (context, model, child) => LoadingTransition(
-            contentChild: _content(context, model),
-            loadingChild: _loading(context),
-            loading: model.isLoading,
-          ),
+        child: model.isLoading ? _loading(context) : _content(context, model),
+      ),
     );
   }
 
   Widget _content(BuildContext context, Positions model) {
     if (model.positions == null || model.positions.isEmpty) {
       return Container(
+        key: Key('Empty'),
         height: MediaQuery.of(context).size.height / 2,
         alignment: Alignment.center,
         child: Flexible(
@@ -34,6 +33,7 @@ class PositionsList extends StatelessWidget {
       );
     } else {
       return ListView.separated(
+        key: Key('Content'),
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -45,12 +45,12 @@ class PositionsList extends StatelessWidget {
             title: Text(position['title']),
             subtitle: Text(position['location']),
             onTap: () => Navigator.of(context).push(MorpheusPageRoute(
-                  builder: (_) => PositionDetails(
-                        title: position['title'],
-                        id: position['id'],
-                      ),
-                  parentKey: parentKey,
-                )),
+              builder: (_) => PositionDetails(
+                title: position['title'],
+                id: position['id'],
+              ),
+              parentKey: parentKey,
+            )),
           );
         },
         separatorBuilder: (context, index) => Divider(height: 1.0),
@@ -60,6 +60,7 @@ class PositionsList extends StatelessWidget {
   }
 
   Widget _loading(BuildContext context) => Container(
+        key: Key('Loading'),
         height: MediaQuery.of(context).size.height / 2,
         alignment: Alignment.center,
         child: CircularProgressIndicator(),

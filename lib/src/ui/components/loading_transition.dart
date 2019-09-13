@@ -3,21 +3,15 @@ import 'package:flutter/material.dart';
 
 class LoadingTransition extends ImplicitlyAnimatedWidget {
   LoadingTransition({
-    @required this.contentChild,
-    @required this.loadingChild,
-    @required this.loading,
+    @required this.child,
     this.duration = const Duration(milliseconds: 300),
   }) : super(
           curve: Curves.easeInOut,
           duration: duration,
         );
 
-  final Widget contentChild;
-  final Widget loadingChild;
-  final bool loading;
+  final Widget child;
   final Duration duration;
-
-  Widget get child => loading ? loadingChild : contentChild;
 
   @override
   _LoadingTransitionState createState() => _LoadingTransitionState();
@@ -27,26 +21,33 @@ class _LoadingTransitionState
     extends AnimatedWidgetBaseState<LoadingTransition> {
   LoadingTransitionOpacityTween opacityTween;
   LoadingTransitionChildTween childTween;
-  Widget currentContent;
+  Key _currentKey;
+
+  bool get _isOldWidget => widget.child.key == _currentKey;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() => _currentKey = widget.child.key);
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed)
+        setState(() => _currentKey = widget.child.key);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final opacity = !_isOldWidget ? opacityTween.evaluate(animation) : 1.0;
     return Opacity(
-      opacity: opacityTween.evaluate(animation),
+      opacity: opacity,
       child: childTween.evaluate(animation),
     );
   }
 
   @override
   void forEachTween(visitor) {
-    opacityTween = visitor(opacityTween, 1.0, (opacity) {
-      if (widget.child == currentContent) {
-        return Tween<double>(begin: 1.0);
-      } else {
-        currentContent = widget.child;
-        return LoadingTransitionOpacityTween(begin: opacity);
-      }
-    });
+    opacityTween = visitor(opacityTween, 1.0,
+        (opacity) => LoadingTransitionOpacityTween(begin: opacity));
     childTween = visitor(childTween, widget.child,
         (child) => LoadingTransitionChildTween(begin: child));
   }
