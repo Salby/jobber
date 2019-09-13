@@ -41,10 +41,18 @@ class PositionsList extends StatelessWidget {
         itemBuilder: (context, index) {
           final position = model.positions[index];
           final parentKey = model.keys['positions'][index];
+          final bool saved =
+              model.saved.where((_) => _['id'] == position['id']).isNotEmpty;
           return ListTile(
             key: parentKey,
             title: Text(position['title']),
             subtitle: Text(position['location']),
+            trailing: saved
+                ? Icon(
+                    Icons.bookmark,
+                    color: Colors.white54,
+                  )
+                : null,
             onTap: () => Navigator.of(context).push(MorpheusPageRoute(
               builder: (_) => PositionDetails(
                 title: position['title'],
