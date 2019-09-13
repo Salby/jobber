@@ -1,6 +1,6 @@
 # Jobber
 
-[![Codemagic build status](https://api.codemagic.io/apps/5d08f04637a0955edb7f843a/5d08f04637a0955edb7f8439/status_badge.svg)](https://codemagic.io/apps/5d08f04637a0955edb7f843a/5d08f04637a0955edb7f8439/latest_build)
+[![Actions Status](https://github.com/Salby/jobber/workflows/Build/badge.svg)](https://github.com/Salby/jobber/actions)
 
 A Flutter app for finding jobs from jobs.github.com. Also a showcase of smooth animations in Flutter.
 
