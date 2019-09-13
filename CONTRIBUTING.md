@@ -6,15 +6,7 @@ Thanks you for taking the time to contribute to Jobber.
 
 When contributing to Jobber you are expected to follow this code.
 
-Examples of behavior that contributes to creating a positive environment include:
-- Use welcoming and inclusive language.
-- Be respectful of different viewpoints and experiences.
-- Accept constructive criticism.
-
-Examples of unacceptable behavior by participants include:
-- Trolling, insulting/derogatory comments, and personal or political attacks.
-- Public or private harassment.
-- Other conduct which could reasonably be considered inappropriate in a professional setting.
+You can find the code of conduct [here](https://github.com/Salby/jobber/blob/master/CODE_OF_CONDUCT.md).
 
 ## How can I contribute?
 
