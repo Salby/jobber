@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/models/positions.dart';
-import 'package:jobber/src/ui/screens/position_details.dart';
+import 'package:jobber/src/core/models/position.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
+import 'package:jobber/src/ui/components/saved_position.dart';
 
 import 'package:provider/provider.dart';
-import 'package:morpheus/morpheus.dart';
 
 class SavedList extends StatelessWidget {
   @override
@@ -32,29 +32,24 @@ class SavedList extends StatelessWidget {
         ),
       );
     } else {
-      return ListView.separated(
-        key: Key('Content'),
+      return AnimatedList(
+        key: model.savedListKey,
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          final position = model.saved[index];
-          final parentKey = GlobalKey();
-          return ListTile(
-            key: parentKey,
-            title: Text(position['title']),
-            subtitle: Text(position['location']),
-            onTap: () => Navigator.of(context).push(MorpheusPageRoute(
-              builder: (_) => PositionDetails(
-                title: position['title'],
-                id: position['id'],
+        initialItemCount: model.saved.length,
+        itemBuilder: (context, index, animation) {
+          final position = Position.fromJson(model.saved[index]);
+          return Column(
+            children: <Widget>[
+              SavedPosition(
+                position: position,
+                animation: animation,
               ),
-              parentKey: parentKey,
-            )),
+              Divider(height: 1.0),
+            ],
           );
         },
-        separatorBuilder: (context, index) => Divider(height: 1.0),
-        itemCount: model.saved.length,
       );
     }
   }

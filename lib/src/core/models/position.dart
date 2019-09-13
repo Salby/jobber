@@ -7,6 +7,19 @@ class Position with ChangeNotifier {
     getPosition();
   }
 
+  Position.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        type = json['type'],
+        url = json['url'],
+        createdAt = json['created_at'],
+        company = json['company'],
+        companyUrl = json['company_url'],
+        location = json['location'],
+        title = json['title'],
+        description = json['description'],
+        howToApply = json['how_to_apply'],
+        companyLogo = json['company_logo'];
+
   final String id;
 
   bool isLoading = false;
@@ -42,16 +55,16 @@ class Position with ChangeNotifier {
   }
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'type': type,
-    'url': url,
-    'created_at': createdAt,
-    'company': company,
-    'company_url': companyUrl,
-    'location': location,
-    'title': title,
-    'description': description,
-    'how_to_apply': howToApply,
-    'companyLogo': companyLogo,
-  };
+        'id': id,
+        'type': type,
+        'url': url,
+        'created_at': createdAt,
+        'company': company,
+        'company_url': companyUrl,
+        'location': location,
+        'title': title,
+        'description': description,
+        'how_to_apply': howToApply,
+        'companyLogo': companyLogo,
+      };
 }

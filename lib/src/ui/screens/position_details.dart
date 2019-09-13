@@ -8,14 +8,23 @@ import 'package:provider/provider.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// A screen that displays a full overview of a [Position] based on a matching
+/// [id].
+///
+/// If [showSavedToggle] is false, the action button will not be shown at the
+/// bottom of the screen. This is useful if there is some other way of toggling
+/// the saved state of the [Position] with the id of [id].
 class PositionDetails extends StatelessWidget {
-  PositionDetails({
+  const PositionDetails({
+    Key key,
     this.title,
     this.id,
-  });
+    this.showSavedToggle = true,
+  }) : super(key: key);
 
   final String title;
   final String id;
+  final bool showSavedToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +42,25 @@ class PositionDetails extends StatelessWidget {
               child: model.isLoading ? _loading() : _body(context, model),
             ),
           ),
-          floatingActionButton: Consumer<Saved>(
-            builder: (context, model, child) {
-              if (model.saved == null) {
-                return Container();
-              } else {
-                return FloatingActionButton(
-                  child: LoadingTransition(
-                    child: model.saved
-                        ? Icon(Icons.bookmark, key: Key('Saved'))
-                        : Icon(Icons.bookmark_border, key: Key('Not saved')),
-                  ),
-                  onPressed: () => model.toggleSaved(context),
-                );
-              }
-            },
-          ),
+          floatingActionButton: showSavedToggle
+              ? Consumer<Saved>(
+                  builder: (context, model, child) {
+                    if (model.saved == null) {
+                      return Container();
+                    } else {
+                      return FloatingActionButton(
+                        child: LoadingTransition(
+                          child: model.saved
+                              ? Icon(Icons.bookmark, key: Key('Saved'))
+                              : Icon(Icons.bookmark_border,
+                                  key: Key('Not saved')),
+                        ),
+                        onPressed: () => model.toggleSaved(context),
+                      );
+                    }
+                  },
+                )
+              : null,
         ),
       ),
     );

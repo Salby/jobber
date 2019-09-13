@@ -9,19 +9,31 @@ class Positions with ChangeNotifier {
 
   final _provider = JobsProvider();
 
-  bool isLoading = false;
+  final savedListKey = GlobalKey<AnimatedListState>();
+  bool _isLoading = false;
   List<dynamic> _positions;
   List<dynamic> _saved;
 
+  bool get isLoading => _isLoading;
+
   List<dynamic> get positions => _positions;
+
   List<dynamic> get saved => _saved;
 
   Future<void> getPositions(BuildContext context) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
-    _positions = await _provider.positionsFromLocation(context);
+
+    try {
+      _positions = await _provider.positionsFromLocation(context);
+    } catch(e) {
+      print('Failed to get positions from location: $e');
+      _positions = [];
+    }
+
     _saved = await _provider.savedPositions();
-    isLoading = false;
+
+    _isLoading = false;
     notifyListeners();
   }
 }

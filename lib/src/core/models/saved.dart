@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/models/position.dart';
 
 import 'package:provider/provider.dart';
@@ -45,6 +46,8 @@ class Saved with ChangeNotifier {
       savedPositions.add(json.encode(model));
     }
     _prefsInstance.setStringList('savedPositions', savedPositions);
+    Provider.of<Positions>(context).getPositions(context);
+
     saved = !saved;
     notifyListeners();
   }
