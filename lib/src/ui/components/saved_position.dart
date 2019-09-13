@@ -49,7 +49,16 @@ class SavedPosition extends StatelessWidget {
           onTap: () => _showPositionDetails(context),
 
           // TODO: Add a trailing button that lets the user remove the position from the positions list.
-          trailing: null,
+          trailing: IconTheme(
+            data: Theme.of(context).primaryIconTheme,
+            child: IconButton(
+              icon: Icon(Icons.remove),
+              tooltip: 'Remove from saved',
+              onPressed: () => Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('This button currently does nothing.'),
+              )),
+            ),
+          ),
         ),
       ),
     );
