@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/ui/layout/positions_list.dart';
 import 'package:jobber/src/ui/layout/saved_list.dart';
 import 'package:jobber/src/ui/components/home_app_bar.dart';
+
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -10,16 +13,20 @@ class Home extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            HomeAppBar(),
-            SliverFillRemaining(
-              child: TabBarView(children: <Widget>[
-                PositionsList(),
-                SavedList(),
-              ]),
-            ),
-          ],
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxScrolled) => [HomeAppBar()],
+          body: TabBarView(
+            children: <Widget>[
+              RefreshIndicator(
+                onRefresh: () async {
+                  await Provider.of<Positions>(context).getPositions(context);
+                  return true;
+                },
+                child: PositionsList(),
+              ),
+              SavedList(),
+            ],
+          ),
         ),
       ),
     );
