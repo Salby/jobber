@@ -23,12 +23,13 @@ class SavedList extends StatelessWidget {
         key: Key('Empty'),
         height: MediaQuery.of(context).size.height / 2,
         alignment: Alignment.center,
-        child: Flexible(
-          child: Text(
-            'Sorry, there are no open positions in your area',
-            style: Theme.of(context).textTheme.display1,
-            textAlign: TextAlign.center,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Text(
+          "Couldn't find any saved positions",
+          style: Theme.of(context).textTheme.subhead.copyWith(
+            color: Colors.white54,
           ),
+          textAlign: TextAlign.center,
         ),
       );
     } else {
