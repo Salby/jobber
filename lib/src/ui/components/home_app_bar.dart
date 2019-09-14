@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/models/positions.dart';
+import 'package:jobber/src/ui/components/refresh_button.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,9 +21,7 @@ class HomeAppBar extends StatelessWidget {
             ),
       ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.refresh),
-          tooltip: 'Refresh',
+        RefreshButton(
           onPressed: () =>
               Provider.of<Positions>(context).getPositions(context),
         ),
