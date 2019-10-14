@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:jobber/src/core/models/settings.dart';
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/services/location_service.dart';
 import 'package:jobber/src/ui/theme/theme.dart';
@@ -15,11 +16,19 @@ class JobberApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    return StreamProvider.value(
-      value: LocationService().locationStream,
+    return MultiProvider(
+      providers: [
+        StreamProvider.value(
+          value: LocationService().locationStream,
+        ),
+        ChangeNotifierProvider<Settings>.value(
+          value: appSettings,
+        ),
+      ],
       child: Consumer<UserLocation>(
         builder: (context, model, _) => ChangeNotifierProvider(
-          builder: (context) => Positions(context),
+          builder: (context) => Positions()
+            ..getPositions(location: appSettings.useLocation ? model : null),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Jobber',

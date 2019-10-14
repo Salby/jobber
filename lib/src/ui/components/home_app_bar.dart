@@ -1,9 +1,16 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import 'package:jobber/src/core/services/location_service.dart';
+import 'package:jobber/src/core/models/settings.dart';
 import 'package:jobber/src/core/models/positions.dart';
+import 'package:jobber/src/ui/screens/settings_screen.dart';
 import 'package:jobber/src/ui/components/refresh_button.dart';
 
 import 'package:provider/provider.dart';
+import 'package:morpheus/morpheus.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 class HomeAppBar extends StatelessWidget {
   @override
@@ -13,7 +20,6 @@ class HomeAppBar extends StatelessWidget {
       pinned: true,
       snap: true,
       forceElevated: true,
-      centerTitle: true,
       title: Text(
         'Jobber',
         style: Theme.of(context).textTheme.title.copyWith(
@@ -21,9 +27,17 @@ class HomeAppBar extends StatelessWidget {
             ),
       ),
       actions: <Widget>[
+        IconButton(
+          icon: Icon(OMIcons.settings),
+          tooltip: 'Settings',
+          onPressed: () => _showSettingsScreen(context),
+        ),
         RefreshButton(
-          onPressed: () =>
-              Provider.of<Positions>(context).getPositions(context),
+          onPressed: () => Provider.of<Positions>(context).getPositions(
+            location: Provider.of<Settings>(context).useLocation
+                ? Provider.of<UserLocation>(context)
+                : null,
+          ),
         ),
       ],
       bottom: TabBar(
@@ -34,5 +48,11 @@ class HomeAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _showSettingsScreen(BuildContext context) {
+    Navigator.of(context).push(Platform.isIOS || Platform.isMacOS
+        ? CupertinoPageRoute(builder: (_) => SettingsScreen())
+        : MorpheusPageRoute(builder: (_) => SettingsScreen()));
   }
 }
