@@ -9,6 +9,8 @@ class SettingCodes {
 
 /// Holds the app's settings.
 class Settings with ChangeNotifier {
+  Settings({SharedPreferences instance}) : prefsInstance = instance;
+
   SharedPreferences prefsInstance;
 
   bool get useLocation =>
