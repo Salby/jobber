@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/services/location_service.dart';
 import 'package:jobber/src/core/resources/jobs_provider.dart';
 
 class Positions with ChangeNotifier {
-  Positions(BuildContext context) {
-    getPositions(context);
-  }
-
   final _provider = JobsProvider();
 
   final savedListKey = GlobalKey<AnimatedListState>();
@@ -26,16 +23,32 @@ class Positions with ChangeNotifier {
 
   Map<String, List<GlobalKey>> get keys => Map.unmodifiable(_keys);
 
-  Future<void> getPositions(BuildContext context) async {
+  /// Fetches positions from jobs.github.com.
+  ///
+  /// If [location] isn't null the positions will be fetched based on the
+  /// user's location.
+  Future<void> getPositions({UserLocation location}) async {
     _isLoading = true;
     notifyListeners();
 
-    try {
-      _positions = await _provider.positionsFromLocation(context);
-      _keys['positions'] = List.generate(_positions.length, (_) => GlobalKey());
-    } catch (e) {
-      print('Failed to get positions from location: $e');
-      _positions = [];
+    if (location != null) {
+      try {
+        _positions = await _provider.positionsFromLocation(location);
+        _keys['positions'] =
+            List.generate(_positions.length, (_) => GlobalKey());
+      } catch (e) {
+        print('Failed to get positions from location: $e');
+        _positions = [];
+      }
+    } else {
+      try {
+        _positions = await _provider.positions();
+        _keys['positions'] =
+            List.generate(_positions.length, (_) => GlobalKey());
+      } catch (e) {
+        print('Failed to get positions');
+        _positions = [];
+      }
     }
 
     _saved = await _provider.savedPositions();

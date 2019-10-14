@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/services/location_service.dart';
+import 'package:jobber/src/core/models/settings.dart';
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/ui/layout/positions_list.dart';
 import 'package:jobber/src/ui/layout/saved_list.dart';
@@ -19,7 +21,11 @@ class Home extends StatelessWidget {
             children: <Widget>[
               RefreshIndicator(
                 onRefresh: () async {
-                  await Provider.of<Positions>(context).getPositions(context);
+                  await Provider.of<Positions>(context).getPositions(
+                    location: Provider.of<Settings>(context).useLocation
+                        ? Provider.of<UserLocation>(context)
+                        : null,
+                  );
                   return true;
                 },
                 child: PositionsList(),

@@ -37,7 +37,7 @@ class Saved with ChangeNotifier {
             matchIndex = index;
             break;
           }
-        } catch(e) {
+        } catch (e) {
           matchIndex = null;
         }
       }
@@ -46,7 +46,7 @@ class Saved with ChangeNotifier {
       savedPositions.add(json.encode(model));
     }
     _prefsInstance.setStringList('savedPositions', savedPositions);
-    Provider.of<Positions>(context).getPositions(context);
+    Provider.of<Positions>(context).getPositions();
 
     saved = !saved;
     notifyListeners();
@@ -63,7 +63,7 @@ class Saved with ChangeNotifier {
           saved = true;
           break;
         }
-      } catch(e) {
+      } catch (e) {
         saved = false;
       }
     }
