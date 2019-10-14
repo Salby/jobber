@@ -21,10 +21,9 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build apk
-      # This currently isn't working. Someone on github has the same issue: https://github.com/subosito/flutter-action/issues/4
-      #- uses: skx/github-action-publish-binaries@master
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.BUILD_TOKEN }}
-      #  with:
-      #    args: 'build/app/outputs/apk/release/app-release.apk'
+      - run: flutter build apk --split-per-abi
+      - name: Create a release APK
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.apk"
+          token: ${{ secrets.BUILD_TOKEN }}
