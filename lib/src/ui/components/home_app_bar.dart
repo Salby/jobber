@@ -5,11 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:jobber/src/core/services/location_service.dart';
 import 'package:jobber/src/core/models/settings.dart';
 import 'package:jobber/src/core/models/positions.dart';
-import 'package:jobber/src/ui/screens/settings_screen.dart';
 import 'package:jobber/src/ui/components/refresh_button.dart';
 
 import 'package:provider/provider.dart';
-import 'package:morpheus/morpheus.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -30,7 +28,7 @@ class HomeAppBar extends StatelessWidget {
         IconButton(
           icon: Icon(OMIcons.settings),
           tooltip: 'Settings',
-          onPressed: () => _showSettingsScreen(context),
+          onPressed: () => Navigator.of(context).pushNamed('/settings'),
         ),
         RefreshButton(
           onPressed: () => Provider.of<Positions>(context).getPositions(
@@ -48,11 +46,5 @@ class HomeAppBar extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _showSettingsScreen(BuildContext context) {
-    Navigator.of(context).push(Platform.isIOS || Platform.isMacOS
-        ? CupertinoPageRoute(builder: (_) => SettingsScreen())
-        : MorpheusPageRoute(builder: (_) => SettingsScreen()));
   }
 }

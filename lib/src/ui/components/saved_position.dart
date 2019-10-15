@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/routing/position_details_arguments.dart';
 import 'package:jobber/src/core/models/position.dart';
-import 'package:jobber/src/ui/screens/position_details.dart';
-
-import 'package:morpheus/morpheus.dart';
 
 /// Builds a [ListTile] that pushes a position screen when tapped. The tile
 /// allows the user to remove the position from the saved list without going
@@ -75,17 +73,18 @@ class SavedPosition extends StatelessWidget {
   /// Pushes a [PositionDetails] screen showing a detailed overview of
   /// [position].
   Future<void> _showPositionDetails(BuildContext context) async {
-    await Navigator.of(context).push(MorpheusPageRoute(
-      builder: (context) => PositionDetails(
+    await Navigator.of(context).pushNamed(
+      '/position',
+      arguments: PositionDetailsArguments(
         title: position.title,
         id: position.id,
 
-        // Don't have a button for toggling the saved state since that will
-        // be handled by the tiled.
-        showSavedToggle: false,
+        // Don't have a button for toggling the saved state since that will be
+        // handled by the tile.
+        showSaveToggle: false,
+
+        parentKey: parentKey,
       ),
-      parentKey: parentKey,
-      transitionDuration: const Duration(milliseconds: 400),
-    ));
+    );
   }
 }
