@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:jobber/src/core/routing/position_details_arguments.dart';
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/ui/components/loading_transition.dart';
-import 'package:jobber/src/ui/screens/position_details.dart';
 
 import 'package:provider/provider.dart';
-import 'package:morpheus/morpheus.dart';
 
 class PositionsList extends StatelessWidget {
   @override
@@ -53,16 +52,17 @@ class PositionsList extends StatelessWidget {
                     color: Colors.white54,
                   )
                 : null,
-            onTap: () => Navigator.of(context).push(MorpheusPageRoute(
-              builder: (_) => PositionDetails(
+            onTap: () => Navigator.of(context).pushNamed(
+              '/position',
+              arguments: PositionDetailsArguments(
                 title: position['title'],
                 id: position['id'],
+                parentKey: parentKey,
               ),
-              parentKey: parentKey,
-            )),
+            ),
           );
         },
-        separatorBuilder: (context, index) => Divider(height: 1.0),
+        separatorBuilder: (context, index) => const Divider(height: 1.0),
         itemCount: model.positions.length,
       );
     }

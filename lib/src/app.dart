@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:jobber/src/core/routing/routes.dart';
 import 'package:jobber/src/core/models/settings.dart';
 import 'package:jobber/src/core/models/positions.dart';
 import 'package:jobber/src/core/services/location_service.dart';
 import 'package:jobber/src/ui/theme/theme.dart';
-import 'package:jobber/src/ui/screens/home.dart';
 
 import 'package:provider/provider.dart';
 
@@ -33,12 +33,7 @@ class JobberApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Jobber',
             theme: theme,
-            home: AnnotatedRegion<SystemUiOverlayStyle>(
-              value: SystemUiOverlayStyle(
-                systemNavigationBarColor: theme.colorScheme.background,
-              ),
-              child: Home(),
-            ),
+            onGenerateRoute: (settings) => generateRoutes(settings),
           ),
         ),
       ),
