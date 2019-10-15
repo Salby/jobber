@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 
 import 'package:jobber/src/core/services/location_service.dart';
 
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
@@ -17,8 +15,7 @@ class JobsProvider {
   final _client = Client();
   final _baseUrl = 'https://jobs.github.com';
 
-  Future<List<dynamic>> positionsFromLocation(BuildContext context) async {
-    final location = Provider.of<UserLocation>(context);
+  Future<List<dynamic>> positionsFromLocation(UserLocation location) async {
     Response response;
     if (location != null) {
       final lat = Uri.encodeComponent(location.latitude.toString());
@@ -29,6 +26,11 @@ class JobsProvider {
     } else {
       response = await _client.get('$_baseUrl/positions.json');
     }
+    return _handleResponse(response);
+  }
+
+  Future<List<dynamic>> positions() async {
+    final Response response = await _client.get('$_baseUrl/positions.json');
     return _handleResponse(response);
   }
 
