@@ -27,17 +27,17 @@ class HomeAppBar extends StatelessWidget {
             ),
       ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(OMIcons.settings),
-          tooltip: 'Settings',
-          onPressed: () => _showSettingsScreen(context),
-        ),
         RefreshButton(
           onPressed: () => Provider.of<Positions>(context).getPositions(
             location: Provider.of<Settings>(context).useLocation
                 ? Provider.of<UserLocation>(context)
                 : null,
           ),
+        ),
+        IconButton(
+          icon: Icon(OMIcons.settings),
+          tooltip: 'Settings',
+          onPressed: () => _showSettingsScreen(context),
         ),
       ],
       bottom: TabBar(
