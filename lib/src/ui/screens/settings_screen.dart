@@ -32,6 +32,7 @@ class SettingsScreen extends StatelessWidget {
               setting,
             ),
           ),
+          const Divider(),
         ],
       ),
     );

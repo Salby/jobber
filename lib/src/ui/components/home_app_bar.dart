@@ -24,6 +24,11 @@ class HomeAppBar extends StatelessWidget {
               color: Theme.of(context).accentColor,
             ),
       ),
+      leading: IconButton(
+        icon: Icon(OMIcons.settings),
+        tooltip: 'Settings',
+        onPressed: () => Navigator.of(context).pushNamed('/settings'),
+      ),
       actions: <Widget>[
         RefreshButton(
           onPressed: () => Provider.of<Positions>(context).getPositions(
@@ -31,11 +36,6 @@ class HomeAppBar extends StatelessWidget {
                 ? Provider.of<UserLocation>(context)
                 : null,
           ),
-        ),
-        IconButton(
-          icon: Icon(OMIcons.settings),
-          tooltip: 'Settings',
-          onPressed: () => _showSettingsScreen(context),
         ),
       ],
       bottom: TabBar(
